@@ -245,10 +245,10 @@ if (dirname(configOutput) !== dirname(bedrockLoaderOutput)) {
 const metafiles = [mainResult.metafile, lazyResult.metafile, codemodeWorkerResult.metafile];
 validateExternalImports(metafiles);
 const cliLauncher = `#!/usr/bin/env node
-import { createRequire, enableCompileCache } from "node:module";
+import * as nodeModule from "node:module";
 
-enableCompileCache();
-createRequire(import.meta.url)("./cli-runtime.js");
+nodeModule.enableCompileCache?.();
+nodeModule.createRequire(import.meta.url)("./cli-runtime.js");
 `;
 writeFileSync(join(bundleDir, "cli.js"), cliLauncher);
 chmodSync(join(bundleDir, "cli.js"), 0o755);
